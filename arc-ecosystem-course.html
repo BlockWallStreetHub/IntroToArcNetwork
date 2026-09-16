@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arc Uncovered — BWS Course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-1:#050A14;
+    --navy-2:#0A1224;
+    --navy-3:#101B33;
+    --navy-4:#16223d;
+    --gold:#D4AF37;
+    --gold-2:#F3D77A;
+    --gold-dim:#8a7228;
+    --text:#EDEFF5;
+    --text-dim:#9AA3B5;
+    --green:#4ADE80;
+    --red:#F87171;
+    --border:#233152;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:radial-gradient(1200px 800px at 20% -10%, #14213f 0%, var(--navy-1) 55%);
+    color:var(--text);
+    font-family:'Barlow',sans-serif;
+    line-height:1.6;
+    padding-bottom:120px;
+  }
+  h1,h2,h3,.headline{font-family:'Bebas Neue',sans-serif;letter-spacing:.03em;}
+  .mono{font-family:'DM Mono',monospace;}
+  a{color:var(--gold-2);}
+
+  /* HERO */
+  .hero{
+    padding:70px 24px 40px;
+    text-align:center;
+    border-bottom:1px solid var(--border);
+  }
+  .hero .eyebrow{
+    color:var(--gold);
+    font-family:'DM Mono',monospace;
+    letter-spacing:.25em;
+    font-size:.75rem;
+    text-transform:uppercase;
+  }
+  .hero h1{
+    font-size:clamp(2.4rem,6vw,4.2rem);
+    background:linear-gradient(120deg,var(--gold-2),var(--gold),#fff5d6);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    margin:.3em 0 .2em;
+  }
+  .hero p.sub{color:var(--text-dim);max-width:680px;margin:0 auto;font-size:1.05rem;}
+
+  /* STICKY NAV */
+  .nav-wrap{
+    position:sticky;top:0;z-index:50;
+    background:rgba(5,10,20,.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-scroll{
+    display:flex;gap:8px;overflow-x:auto;padding:12px 16px;
+    scrollbar-width:none;
+  }
+  .nav-scroll::-webkit-scrollbar{display:none;}
+  .pill{
+    flex:0 0 auto;
+    padding:9px 16px;border-radius:999px;
+    border:1px solid var(--border);
+    background:var(--navy-3);
+    color:var(--text-dim);
+    font-family:'DM Mono',monospace;
+    font-size:.78rem;
+    cursor:pointer;white-space:nowrap;
+    transition:.2s;
+  }
+  .pill:hover{border-color:var(--gold-dim);color:var(--text);}
+  .pill.active{
+    background:linear-gradient(120deg,var(--gold),var(--gold-2));
+    color:#1a1400;font-weight:600;border-color:transparent;
+  }
+  .progress-track{height:3px;background:var(--navy-4);width:100%;}
+  .progress-bar{height:100%;background:linear-gradient(90deg,var(--gold-dim),var(--gold));width:8.3%;transition:width .3s;}
+
+  /* MAIN */
+  main{max-width:880px;margin:0 auto;padding:40px 20px;}
+  .module{display:none;animation:fade .4s ease;}
+  .module.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+  .module-tag{
+    display:inline-block;color:var(--gold);font-family:'DM Mono',monospace;
+    font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;margin-bottom:8px;
+  }
+  .module h2{font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:18px;color:#fff;}
+  .module h3{font-size:1.3rem;color:var(--gold-2);margin:28px 0 10px;font-family:'Barlow',sans-serif;font-weight:700;}
+  .module p{margin-bottom:14px;color:#dfe3ee;}
+  .module ul, .module ol{margin:10px 0 16px 22px;color:#dfe3ee;}
+  .module li{margin-bottom:8px;}
+  strong{color:var(--gold-2);}
+
+  .card{
+    background:var(--navy-3);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:20px 22px;
+    margin:18px 0;
+  }
+  .card.warn{border-color:#5a3a1e;background:#1f1610;}
+  .card.warn .label{color:#f0a95c;}
+  .card.legit{border-color:#1e5a3a;background:#0f1f16;}
+  .card.legit .label{color:var(--green);}
+  .card .label{
+    font-family:'DM Mono',monospace;font-size:.75rem;letter-spacing:.15em;
+    text-transform:uppercase;margin-bottom:8px;display:block;
+  }
+
+  .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:16px 0;}
+  .stat{background:var(--navy-4);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;}
+  .stat .n{font-family:'DM Mono',monospace;color:var(--gold-2);font-size:1.15rem;font-weight:500;}
+  .stat .l{color:var(--text-dim);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;margin-top:4px;}
+
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.92rem;}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--border);}
+  th{color:var(--gold);font-family:'DM Mono',monospace;font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;}
+  td{color:#dfe3ee;}
+
+  code, .ca{
+    font-family:'DM Mono',monospace;background:var(--navy-1);
+    border:1px solid var(--border);padding:2px 6px;border-radius:4px;
+    font-size:.82rem;color:var(--gold-2);word-break:break-all;
+  }
+
+  .script-note{
+    border-left:3px solid var(--gold);
+    background:rgba(212,175,55,.06);
+    padding:12px 16px;margin:18px 0;
+    font-style:italic;color:var(--text-dim);font-size:.92rem;
+  }
+
+  /* QUIZ */
+  .qcard{background:var(--navy-3);border:1px solid var(--border);border-radius:14px;padding:22px;margin-bottom:16px;}
+  .qcard .qnum{color:var(--gold);font-family:'DM Mono',monospace;font-size:.78rem;letter-spacing:.1em;}
+  .qcard h4{font-size:1.1rem;margin:8px 0 14px;color:#fff;}
+  .opt{
+    display:block;width:100%;text-align:left;
+    background:var(--navy-4);border:1px solid var(--border);
+    color:#dfe3ee;padding:12px 14px;border-radius:8px;margin-bottom:8px;
+    cursor:pointer;font-family:'Barlow',sans-serif;font-size:.95rem;transition:.15s;
+  }
+  .opt:hover{border-color:var(--gold-dim);}
+  .opt.correct{background:#123420;border-color:var(--green);color:#c8f7d8;}
+  .opt.incorrect{background:#3a1616;border-color:var(--red);color:#f7c8c8;}
+  .opt[disabled]{cursor:default;}
+  .explain{display:none;margin-top:10px;padding:10px 14px;background:var(--navy-1);border-radius:8px;color:var(--text-dim);font-size:.88rem;}
+  .explain.show{display:block;}
+  .quiz-footer{text-align:center;margin-top:24px;}
+  #scoreBox{display:none;text-align:center;padding:30px;background:var(--navy-3);border:1px solid var(--gold-dim);border-radius:14px;margin-bottom:20px;}
+  #scoreBox .big{font-family:'Bebas Neue';font-size:3rem;color:var(--gold-2);}
+
+  /* FOOTER NAV */
+  .floatnav{
+    position:fixed;bottom:0;left:0;right:0;
+    background:rgba(5,10,20,.95);backdrop-filter:blur(10px);
+    border-top:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;justify-content:space-between;align-items:center;gap:12px;
+    z-index:50;
+  }
+  .btn{
+    padding:12px 22px;border-radius:10px;border:1px solid var(--border);
+    background:var(--navy-3);color:var(--text);font-family:'Barlow',sans-serif;
+    font-weight:600;cursor:pointer;font-size:.92rem;
+  }
+  .btn.primary{background:linear-gradient(120deg,var(--gold),var(--gold-2));color:#1a1400;border:none;}
+  .btn:disabled{opacity:.3;cursor:not-allowed;}
+  .floatnav .mid{color:var(--text-dim);font-family:'DM Mono',monospace;font-size:.75rem;text-align:center;flex:1;}
+
+  @media(max-width:600px){
+    .floatnav .btn span.txt{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="eyebrow">Block Wall Street · Course</div>
+  <h1>ARC UNCOVERED</h1>
+  <p class="sub">Circle's institutional Layer-1, the real DeFi being built on it, and the wide-open memecoin frontier that launched alongside it. What's legitimate, what's speculation, and what to tell your audience.</p>
+</div>
+
+<div class="nav-wrap">
+  <div class="nav-scroll" id="navScroll"></div>
+  <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+</div>
+
+<main id="main"></main>
+
+<div class="floatnav">
+  <button class="btn" id="prevBtn" onclick="go(-1)">← <span class="txt">Prev</span></button>
+  <div class="mid" id="midLabel">Module 1 of 8</div>
+  <button class="btn primary" id="nextBtn" onclick="go(1)"><span class="txt">Next</span> →</button>
+</div>
+
+<script>
+/* ============ CONTENT DATA ============ */
+const modules = [
+{
+  id:"arc",
+  tag:"Module 1",
+  title:"What Is Arc?",
+  html:`
+    <p>Arc is a public Layer-1 blockchain built by <strong>Circle</strong> — the company behind USDC, the second-largest stablecoin in the world. Circle isn't calling Arc "just another chain." They're calling it <strong>"the economic OS for the internet"</strong> — a platform meant to host global markets, real-time value movement, and even autonomous AI agents transacting with each other. That's a big claim, and this module is about unpacking exactly what's behind it before we get into the projects built on top.</p>
+    <div class="script-note">Script note: this is the frame to set for viewers up front — Arc isn't trying to be the next Solana or the next meme-chain. It's trying to be regulated, institutional financial plumbing that happens to also be public and permissionless to build on. Say that distinction explicitly, because everything else in this course only makes sense once viewers have that frame.</div>
+
+    <h3>Why Circle built its own chain at all</h3>
+    <p>Circle didn't need to build a blockchain to issue USDC — USDC already runs on more than a dozen chains, from Ethereum to Solana to Robinhood Chain. So why build Arc? Because none of those chains were built <em>around</em> USDC — Circle is a guest on all of them, subject to someone else's gas token, someone else's validator set, and someone else's roadmap. Arc flips that: Circle controls the base layer, the fee currency, and who's allowed to validate blocks. For a company whose entire business is being the trusted issuer of a regulated dollar-token, owning the rails that token settles on is a strategic move, not just a technical one.</p>
+
+    <h3>The launch, in plain terms</h3>
+    <p>Arc's public mainnet went live on <strong>September 16, 2026</strong>. It runs on a proof-of-authority consensus with a <strong>fixed, known, vetted set of validators</strong> — not an open validator market like Ethereum or Solana, where anyone can stake tokens and start validating. Circle's documentation is explicit about this trade-off: developers can deploy contracts and send transactions without approval, while a fixed group of known, vetted institutions produce and validate blocks. In other words, the applications layer is permissionless — anyone can build and launch on Arc, which is exactly why Argus and PionArc could exist within days of mainnet — but the consensus layer underneath it is closed to a known set of operators.</p>
+
+    <div class="stat-grid">
+      <div class="stat"><div class="n">~20</div><div class="l">SOC 2 validators</div></div>
+      <div class="stat"><div class="n">&lt;1 sec</div><div class="l">Finality</div></div>
+      <div class="stat"><div class="n">3,000+</div><div class="l">TPS target</div></div>
+      <div class="stat"><div class="n">~$0.01</div><div class="l">Base gas fee</div></div>
+    </div>
+
+    <h3>Who's actually validating blocks</h3>
+    <p>This is the detail that separates Arc from every other new chain launch: the validator cohort reads like a list of the world's largest financial institutions. Circle's release names eleven institutions plus itself, phased in over time — <strong>BlackRock, Visa, Mastercard, DTCC, Standard Chartered, Sumitomo Corporation, Galaxy, Figment, MoneyGram, Goldman Sachs</strong>, and Circle itself.</p>
+    <p>That's not marketing fluff — those are literally the entities producing and signing blocks on this network. Compare that to how a chain like Ethereum or Solana works, where the validator set is open and anonymous by design — anyone with enough staked capital can run a validator, and nobody needs to know who they are. Arc deliberately does the opposite: every validator is a named, regulated, SOC 2-certified institution. That's a feature for the institutions Arc is courting (they get a known counterparty list, audit trails, and sanctions controls) and a trade-off for crypto purists who value permissionless, anonymous consensus as a core value.</p>
+
+    <h3>Why USDC-denominated gas matters</h3>
+    <p>Every other major chain makes you hold a separate volatile gas token — ETH for Ethereum, SOL for Solana. Arc charges gas fees directly in USDC. For a builder or an institution, that means predictable, dollar-denominated costs instead of gas prices that swing with a speculative token's price. Think about what that solves in practice: a company running payroll or settling invoices onchain doesn't want its transaction cost to double because a speculative gas token pumped overnight. Pinning gas to USDC turns blockchain fees into something a CFO can actually budget for — which is precisely the audience Arc is built around. That's a deliberate design choice aimed at treasuries, fintechs, and payment companies — not degen traders.</p>
+
+    <h3>What Arc is actually built for</h3>
+    <p>Circle groups Arc's target use cases into a handful of categories, and it's worth walking through each one so your audience understands this isn't a vague "blockchain for everything" pitch — it's aimed at specific, real financial workflows:</p>
+    <ul>
+      <li><strong>Asset tokenization</strong> — issuing and trading tokenized real-world assets with near-instant settlement, so a tokenized bond or fund share can change hands as fast as a stock trade instead of taking days to clear</li>
+      <li><strong>Onchain FX</strong> — 24/7 stablecoin-to-stablecoin foreign exchange, replacing a foreign exchange desk that closes on weekends with markets that never sleep</li>
+      <li><strong>Cross-border payments & payouts</strong> — near-instant, dollar-based settlement for companies sending money internationally, cutting out the multi-day delays of traditional correspondent banking</li>
+      <li><strong>Treasury management</strong> — real-time stablecoin settlement and automated liquidity for businesses managing cash positions across multiple currencies and accounts</li>
+      <li><strong>Capital markets settlement</strong> — sub-second finality for high-frequency trading and collateral, where even small settlement delays can create real financial risk</li>
+      <li><strong>Agentic economic activity</strong> — letting AI agents pay, trade, and coordinate value in real time, with fees cheap enough for nanopayments — think an AI agent paying another API or agent a fraction of a cent per request, something that's simply not economical on a chain with volatile, expensive gas</li>
+    </ul>
+
+    <div class="card legit">
+      <span class="label">Key takeaway</span>
+      Arc is TradFi infrastructure wearing a blockchain. The validator set alone tells you who this was built for — and it's not retail degens. That context matters for everything else in this course, because it explains why a chain built by BlackRock's and Visa's validators is simultaneously hosting a memecoin casino within days of launch. Both things are true at once, and your audience needs to hold both in their head.
+    </div>
+
+    <h3>One important caveat</h3>
+    <p>Circle minted 10 billion ARC tokens in the US this week as a technical milestone — but <strong>without committing to a public token launch</strong>. Arc's own official account confirmed this directly: the minting is described as a technical milestone in the Arc roadmap as the network explores a future transition from Proof of Authority toward Proof of Stake — and Circle is flagged as the first publicly traded company to mint a network token for a new blockchain.</p>
+    <p>Arc's own words are worth quoting to your audience directly, because they couldn't be clearer: <strong>ARC is not live, tradeable, available for public use, or active for staking, governance, fees, or utility.</strong> The Arc network remains Proof of Authority today, and future ARC functionality and activation remain subject to change. The official contract can be viewed on Arc's own block explorer: <span class="ca">0xA12Cd81d0f9988E3d60c4B6a0D52D368Ef3c788d</span> — but viewing the contract is not the same as being able to buy, trade, or use the token. There is nothing live here yet.</p>
+    <div class="script-note">Script note: pull up that official contract page on Arc's explorer on screen here. Seeing a real, verifiable contract address that Arc itself confirmed — alongside the plain statement that it isn't tradeable — is the clearest way to inoculate your audience against fake "ARC token" listings that will inevitably try to front-run the real launch.</div>
+    <p>So as of recording this, there is no confirmed public "ARC" investment token from Circle itself — only a minted-but-inactive contract. Anything else trading right now with "ARC" in the name is either infrastructure-layer tooling or a community/memecoin — not Circle's own asset, and not this contract. Make that distinction loudly for your audience, because it's the single easiest way for someone to lose money on this chain in its first week: buying something called "ARC" assuming it's Circle's official token when it isn't — or worse, assuming this confirmed contract is already tradeable when Arc has explicitly said it is not.</p>
+  `
+},
+{
+  id:"aave",
+  tag:"Module 2",
+  title:"Aave V4 on Arc — the institutional DeFi layer",
+  html:`
+    <p>If Module 1 was "here's the chain," this module is "here's the first real financial product built on it." <strong>Aave</strong> is one of the largest, longest-running lending protocols in DeFi — years of audits, billions in historical TVL, and a track record that spans multiple market cycles including the 2022 downturn that wiped out plenty of newer, weaker DeFi protocols. Aave deploying its next-generation V4 protocol on Arc is the clearest signal that Arc is being taken seriously by real DeFi infrastructure, not just speculative apps. This is the module to slow down on — it's your audience's reference point for what "legitimate" looks like for the rest of the course.</p>
+
+    <h3>What Aave actually does, for anyone new to it</h3>
+    <p>Before the Arc-specific details, it's worth grounding viewers who don't already know Aave: it's a lending and borrowing protocol. Users supply assets — like USDC — into a shared pool and earn yield from interest paid by borrowers. Other users borrow against posted collateral. It's the same basic function as a bank's lending desk, except the pool is a smart contract, rates adjust algorithmically based on supply and demand, and anyone with a compatible wallet can participate without an application or credit check. That's the base layer Aave is now bringing to Arc.</p>
+
+    <h3>How we got here — the governance trail</h3>
+    <table>
+      <tr><th>Date</th><th>Event</th></tr>
+      <tr><td>May 29, 2026</td><td>Aave Labs publishes a "Temp Check" governance proposal to deploy V4 on Arc</td></tr>
+      <tr><td>Mid-2026</td><td>Proposal advances to ARFC (formal request-for-comment) stage in Aave governance</td></tr>
+      <tr><td>Sept 16, 2026</td><td>Aave V4 goes live on Arc at mainnet launch, alongside Morpho</td></tr>
+    </table>
+    <p>Walk your audience through why this governance trail actually matters: Aave isn't controlled by a single company that can just decide to deploy wherever it wants. It's governed by AAVE token holders through a multi-stage proposal process — a "Temp Check" gauges community sentiment first, before it ever reaches a binding vote. The fact that this process played out publicly, over months, with real money committed, is itself evidence that this deployment was scrutinized rather than rubber-stamped.</p>
+    <p>The proposal committed a minimum of <strong>$2 million per year over five years ($10 million total)</strong> to the Aave DAO — positioning Aave as the foundational lending layer for institutions building on Arc. That's a meaningful, multi-year financial commitment, not a marketing partnership announced and forgotten.</p>
+    <p>Circle's CEO, Jeremy Allaire, publicly backed the move, calling Aave one of two critical next-generation infrastructures shaping the future of DeFi — a notable public endorsement from the person running the chain itself, not just a routine ecosystem-partner press release.</p>
+
+    <h3>What's actually new in V4</h3>
+    <p>Aave V4 isn't just a copy-paste of V3 onto a new chain — it's a real architectural redesign, and understanding the redesign helps explain why Aave felt V4 specifically was ready for an institutional chain like Arc:</p>
+    <ul>
+      <li><strong>Hub-and-Spoke liquidity model</strong> — a central Liquidity Hub on each chain aggregates assets, while customizable "Spoke" markets draw from that shared liquidity with their own risk parameters. This replaces V3's fragmented, siloed pools, where liquidity for the same asset could be split across many disconnected markets with no way to share depth between them.</li>
+      <li><strong>ERC-4626 vaults</strong> — V4 eliminates the rebasing behavior of the old aTokens (V3's interest-bearing receipt tokens, which changed balance automatically as interest accrued), which simplifies accounting for integrators, auditors, and tax software. A non-rebasing token is much easier for institutional accounting systems, spreadsheets, and tax software to handle correctly.</li>
+      <li><strong>Built for institutional-scale volume</strong> — the whole redesign is explicitly aimed at handling larger, more predictable flows than the retail-driven usage patterns V3 was designed around, with more granular, configurable risk parameters per market.</li>
+    </ul>
+
+    <h3>Who's backing the Arc deployment</h3>
+    <p>This isn't Aave alone — a cluster of institutional risk and liquidity players are supporting the Arc market through curated vault strategies, risk oversight, and USDC/EURC supply: <strong>Bitwise, Cumberland, Dialectic, Galaxy, Gauntlet, Keyrock,</strong> and <strong>Steakhouse Financial</strong>. It's worth naming what a few of these actually do on-camera: Gauntlet and Steakhouse Financial are risk-management firms that specialize in setting and monitoring DeFi lending parameters — the kind of firms that get hired specifically to prevent the type of cascading liquidation failures that have sunk other lending protocols. Cumberland and Keyrock are institutional trading and liquidity firms. Having names like this attached isn't cosmetic — it's the risk-management layer that a chain courting BlackRock and Visa actually needs.</p>
+
+    <div class="card warn">
+      <span class="label">Important clarification for your audience</span>
+      There is no separate "Arc AAVE" coin. This is the existing AAVE protocol and its existing AAVE governance token expanding to a new chain — not a new asset to buy. If someone wants exposure here, it's through <em>using</em> the Arc lending market itself (supplying or borrowing USDC/EURC and other listed assets), not purchasing a new token.
+    </div>
+
+    <div class="script-note">Script note: this is a natural spot to actually demo the Arc Aave market on screen if you have access — showing viewers a real supply/borrow interface with real rates does more to build trust than any amount of narration.</div>
+
+    <h3>Why this matters for the rest of the course</h3>
+    <p>Keep Aave V4 in your back pocket as the reference point of "what legitimate looks like" on Arc. Every project in the next few modules should be measured against it: does it have real backers, audits, and a track record — or is it a brand-new, unaudited contract that launched this week? By the time you get to Module 3, the contrast will be stark.</p>
+  `
+},
+{
+  id:"argus",
+  tag:"Module 3",
+  title:"Argus — the token launchpad (and its casino floor)",
+  html:`
+    <p>Argus (argus.world) is a <strong>permissionless token launchpad</strong> built directly on Arc. Anyone can create a token; tax splits go to the creator, a buyback mechanism, liquidity, and holders — starting from the first trade. Every parameter is fixed at launch, meaning creators can't quietly change the rules on holders after the fact. This is the sharpest possible contrast to Module 2 — Aave V4 is institutions taking months to negotiate a governance proposal; Argus is a stranger deploying a token in minutes with zero oversight. Both are real, both are live on the same chain, and your audience needs to understand both to actually understand Arc.</p>
+
+    <h3>How it actually works</h3>
+    <ol>
+      <li>A creator deploys a new token through Argus with a fixed tax rate (commonly 1–3% on both buys and sells)</li>
+      <li>The token starts trading immediately, usually paired against USDC</li>
+      <li>Tokens climb toward a "graduation" milestone — a market-cap threshold at which the token moves into deeper, more permanent liquidity</li>
+      <li>A "King of the Hill" board highlights whichever token is pumping hardest that hour</li>
+    </ol>
+    <p>Walk through why the tax mechanic exists at all: on most bonding-curve launchpads, every buy and sell skims a small percentage that gets redistributed — some back to the token's creator (an incentive to actually promote and support their own launch), some into a buyback pool (which can prop up the price by continually repurchasing tokens from the open market), some into deepening liquidity, and some paid directly to holders. It's a self-sustaining mini-economy built entirely around trading activity itself — there's no external revenue source, no product being sold, no service being rendered. The "product" is the trading.</p>
+    <div class="script-note">Script note: show the live Argus homepage on screen here — the "Contenders" and "Top by market cap" boards make this concept click instantly for viewers once they see it. Scrolling through the live token feed in real time is more persuasive than any explanation of how fast and chaotic this market moves.</div>
+
+    <h3>Argus's own token — $ARGUS</h3>
+    <div class="stat-grid">
+      <div class="stat"><div class="n">$ARGUS</div><div class="l">Platform token</div></div>
+      <div class="stat"><div class="n">~$28M</div><div class="l">Market cap (observed)</div></div>
+      <div class="stat"><div class="n">~$1.1M</div><div class="l">Liquidity (observed)</div></div>
+    </div>
+    <p>Contract: <span class="ca">0xeCe5cA8bf9220718E5727754026757512212cb3c</span></p>
+    <p>This is Argus's own governance/platform token, distinct from the thousands of individual memecoins launched through the platform. It functions more like the "house" token of the casino — its value is tied to the success of the Argus platform overall, not to any single meme launch. At the time of recording it was up over 1,000% for the day — a number that tells you exactly how new and volatile this market is, not that this is a reliable return. A number like that can just as easily be -1,000% the following week; that's the nature of a token days into its life with thin liquidity behind it.</p>
+
+    <h3>What's actually on the platform</h3>
+    <p>At the time of this recording, Argus had over <strong>6,400 tokens</strong> listed, most with market caps between $2,000 and $30,000, and daily swings of several hundred percent in either direction. Names range from harmless jokes to explicit shock-value tickers — this is unfiltered, permissionless creation, and your audience should understand that literally anyone can launch a token here in minutes, with no application, no identity check, and no gatekeeper reviewing what gets listed. That's the entire value proposition of a launchpad like this — total openness — and it's also exactly why the risk profile is so extreme.</p>
+    <p>It's worth explaining the mechanics of why most of these tokens sit at such tiny market caps: with thousands of tokens competing for attention and liquidity at any given moment, only a handful can realistically capture enough trading volume to grow meaningfully. The "King of the Hill" and "Contenders" boards exist precisely because attention is the scarce resource here — visibility on those boards is often what separates a token that dies at a $2,000 market cap from one that briefly spikes into the tens of thousands.</p>
+
+    <div class="card warn">
+      <span class="label">Risk framing for your audience</span>
+      This is the highest-risk category of crypto asset that exists. No audits, no team background checks, no product — just a name, a chart, and momentum. The overwhelming majority of tokens launched on any bonding-curve launchpad go to zero. Treat this section as "how the casino works," not "what to buy." If you show specific tokens on screen, make clear you're using them as illustrations of the mechanic, not recommendations.
+    </div>
+  `
+},
+{
+  id:"synthra",
+  tag:"Module 4",
+  title:"Synthra — the chain-abstracted trading layer",
+  html:`
+    <p>Synthra (synthra.org) takes a different lane than Argus. Instead of being a memecoin factory, it's positioning itself as trading <strong>infrastructure</strong> — a layer that combines spot swaps, concentrated liquidity provision, cross-chain routing, and Hyperliquid-powered perpetual futures inside one trading experience. Where Argus is about creating new assets, Synthra is about making it easier to trade the assets that already exist, across multiple chains, from one place.</p>
+
+    <h3>The problem Synthra says it's solving</h3>
+    <p>To make this land for viewers, it helps to describe the pain point first: today, if you want to trade across several chains, you typically need separate wallets funded on each chain, separate DEX interfaces, and you have to manually compare prices across all of them to find the best route — a process that's slow, fragmented, and easy to get wrong. Synthra's pitch is to abstract all of that away: one interface, one execution layer, and the app itself figures out the best route across whatever chains and liquidity sources it supports. This "chain abstraction" concept is a genuine trend across DeFi right now — the idea that users shouldn't need to think about which specific blockchain their trade executes on.</p>
+
+    <h3>What it's actually building</h3>
+    <p>Synthra splits its architecture into three layers: <strong>liquidity, execution, and routing</strong>. The pitch is that a trader (or another app integrating via API) shouldn't have to manually hop between five different chains and DEXs to find the best price — Synthra compares available routes and executes for them.</p>
+    <ul>
+      <li><strong>Spot swaps</strong> — cross-chain token swaps, letting a user trade an asset on one chain for an asset that actually lives on a different chain, without manually bridging first</li>
+      <li><strong>Concentrated liquidity provision</strong> — for LPs seeking capital-efficient market making, a model (popularized by Uniswap V3) that lets liquidity providers focus their capital in specific price ranges instead of spreading it thin across the entire price curve</li>
+      <li><strong>Perpetual futures</strong> — powered by Hyperliquid's infrastructure, not built from scratch. This matters: rather than building its own perpetuals engine (a very hard, high-stakes piece of financial infrastructure to get right), Synthra is plugging into Hyperliquid's existing, battle-tested derivatives infrastructure and wrapping it into its own interface.</li>
+    </ul>
+
+    <h3>Track record so far</h3>
+    <p>Synthra isn't a same-week launch like most Argus tokens. It ran a testnet that crossed <strong>$1.6M in TVL</strong> — a meaningful signal, because getting real users to commit real (if test-network) capital and liquidity takes genuine effort from builders, LPs, and early users, not just a marketing push. It's now confirmed <strong>live on Arc mainnet</strong> at launch, alongside earlier integrations on Robinhood Chain and Uomi Network testnets. That multi-chain testnet history is worth pointing out to your audience as a positive signal distinct from the token question below — a team building and shipping across multiple networks over time behaves differently than a team that appears once and disappears.</p>
+
+    <div class="card warn">
+      <span class="label">On the token — flagged as requested</span>
+      Synthra does not have a live, tradable token as of this recording. Its ticker (<strong>SYN</strong>) is listed on CoinGecko as an <em>upcoming</em> cryptocurrency with price data "currently unavailable," and the team has only just submitted a request for exchange verification. There is nothing to buy here yet — if you see something claiming to be "the Synthra token" trading somewhere, treat it as unverified until the team confirms an official contract address.
+    </div>
+
+    <p>This gap — real product, real testnet traction, no confirmed live token — is actually a really useful teaching example. It shows your audience that "the product is real" and "there's something to invest in" are two completely separate questions, and conflating them is exactly how people end up buying fake or unofficial tokens that impersonate a legitimate project's upcoming launch.</p>
+
+    <div class="script-note">Script note: this is a good teaching moment on-camera — show viewers how to actually verify a token's legitimacy (checking the project's official X account and site for a confirmed contract address) rather than trusting a random listing. Consider walking through the CoinGecko "upcoming" listing live so they see exactly what an unconfirmed token status looks like.</div>
+  `
+},
+{
+  id:"pionarc",
+  tag:"Module 5",
+  title:"PionArc & $PI — the meme built on a genesis easter egg",
+  html:`
+    <p>PionArc (pionarc.com) is a pure lore/meme site, and it's worth covering because it shows how fast community mythology forms around a brand-new chain — and how effective a good story is at generating attention in a market where attention is the scarcest resource, as we covered in Module 3.</p>
+
+    <h3>The story it's built around</h3>
+    <p>The site claims that Circle hid the digits of <strong>π (pi)</strong> inside the coinbase address of Arc's mainnet genesis block — literally line 10 of the network's <code>genesis.json</code> file, the configuration file that defines a blockchain's very first block and starting parameters. Drop the "0x" prefix and add a decimal point to the coinbase address, and you get the opening digits of pi: <span class="ca">3.141592653589793238462643383279502884197...</span></p>
+    <p>It's worth explaining to your audience what a "coinbase address" even is in this context, since it's a genuinely technical detail dressed up as a treasure hunt: in many blockchain genesis files, the coinbase address is simply a placeholder field, often set to something arbitrary or symbolic by the engineers who configure the chain's launch parameters. Whether Circle's engineers deliberately encoded pi as a wink, or it's simply an eye-catching coincidence somebody in the community spotted and ran with, is genuinely unclear — Circle hasn't confirmed either way. What's not unclear is how fast the story spread and turned into an actual tradable token.</p>
+    <p>Whether that was an intentional easter egg from Circle's engineers or just numeric coincidence in a genesis file, it caught on fast — and a community memecoin was launched around the story within days of mainnet going live. That speed is itself worth flagging on camera: this is how quickly narrative-driven speculation can form around a brand-new chain, often faster than any serious due diligence could realistically happen.</p>
+
+    <h3>The token</h3>
+    <div class="stat-grid">
+      <div class="stat"><div class="n">$PI</div><div class="l">Ticker</div></div>
+      <div class="stat"><div class="n">Argus</div><div class="l">Where it trades</div></div>
+    </div>
+    <p>Contract: <span class="ca">0x30aC39DeC8a854c5Fd03AA429E3BEF32a7E4c84a</span></p>
+    <p>$PI trades through Argus (Module 3) — it's one of the thousands of tokens on that launchpad, just with a more developed lore page around it. That's an important structural point: PionArc.com itself isn't a trading venue or an exchange — it's essentially a marketing site, a piece of narrative built around a token that actually lives and trades on Argus's infrastructure. The lore is the product here, not any underlying technology or utility.</p>
+
+    <div class="card warn">
+      <span class="label">The site's own disclaimer — say this out loud on camera</span>
+      PionArc states plainly on its own page: "$PI is a community memecoin on Arc. Not affiliated with Circle or Arc. Not financial advice." That's the project's own words, not spin from us — repeat it verbatim to your audience so there's zero ambiguity about what this is.
+    </div>
+
+    <p>Use this module as a case study in narrative-driven speculation more broadly: a memecoin built purely on a clever story, with no product, no roadmap, and no team identity disclosed, is about as close to pure speculation as crypto gets. It's not inherently a scam — the disclaimer is upfront and honest — but it's also not an investment in anything beyond the strength of the story and whoever's willing to buy in after you.</p>
+  `
+},
+{
+  id:"liquidlaunch",
+  tag:"Module 6",
+  title:"LiquidLaunch — the multichain fair launchpad",
+  html:`
+    <p>LiquidLaunch (launch.liqd.ag) is the odd one out on this list because it isn't Arc-native — it's a multichain launchpad from <strong>Liquid Labs</strong>, originally built for Hyperliquid's HyperEVM, that has expanded to support <strong>Robinhood Chain</strong> and now <strong>Arc</strong> as well. That's an important framing difference from Argus and PionArc: LiquidLaunch isn't a project that appeared because Arc launched — it's an existing, multichain operation that decided to add Arc as one more supported network among several.</p>
+
+    <h3>Why a launchpad expands across chains at all</h3>
+    <p>It's worth explaining the business logic here: a launchpad's real product is its user base and its liquidity infrastructure, not any single blockchain. By building LiquidCore (its AMM) and LiquidSwap (its aggregator) as modular infrastructure, Liquid Labs can plug into a new chain's ecosystem relatively quickly once it's established a working stack elsewhere. That's a very different growth pattern than a chain-native project like Argus, which was purpose-built for Arc from day one and has nowhere else to go if Arc doesn't gain traction.</p>
+
+    <h3>The Liquid Labs product stack</h3>
+    <ul>
+      <li><strong>LiquidLaunch</strong> — the token launchpad: bonding-curve token creation with anti-snipe protection</li>
+      <li><strong>LiquidSwap</strong> — a multichain DEX aggregator routing across 20+ DEXs (HyperSwap, KittenSwap, Uniswap, PancakeSwap and more), meaning it doesn't host its own liquidity so much as find the best price across everyone else's</li>
+      <li><strong>LiquidCore</strong> — an oracle-validated AMM designed for tight spreads and predictable execution, reading pricing data directly from Hyperliquid's precompiles rather than relying purely on pool-based price discovery, which helps keep quoted prices closer to real market prices</li>
+    </ul>
+
+    <h3>How the launch mechanic differs from Argus</h3>
+    <p>LiquidLaunch uses an <strong>x*y+k bonding curve</strong> with virtual liquidity from block zero, meaning a creator doesn't need to seed capital up front — the curve itself provides synthetic liquidity that lets trading start immediately, even before any real capital has entered the pool. It also has a built-in <strong>anti-sniper window</strong> — any funds the creator sends with the token-creation transaction automatically buy tokens for them before anyone else can, which is meant to stop bots from front-running the launch. This is a meaningful design difference worth pointing out: on some launchpads, automated bots can detect a new token deployment and buy in within the same block, before any human even sees the listing, then dump on the creator and early community. LiquidLaunch's mechanic is specifically built to blunt that. Once a token's curve completes, it automatically <strong>graduates</strong> into LiquidCore's deeper liquidity — conceptually similar to Argus's graduation milestone, just built on different underlying infrastructure.</p>
+
+    <h3>The token — $LIQD</h3>
+    <div class="stat-grid">
+      <div class="stat"><div class="n">$LIQD</div><div class="l">Ticker</div></div>
+      <div class="stat"><div class="n">~1.2B</div><div class="l">Max / circulating supply</div></div>
+      <div class="stat"><div class="n">$0.0025–0.0036</div><div class="l">Recent price range</div></div>
+      <div class="stat"><div class="n">~96%</div><div class="l">Down from ATH ($0.083)</div></div>
+    </div>
+    <p>LIQD is the ecosystem token across all three Liquid Labs products. The team states that <strong>100% of the revenue generated on LiquidLaunch and LiquidSwap goes back to LIQD stakers</strong> — a real revenue-share mechanic, unlike most launchpad tokens which have no claim on platform fees at all. That's worth pausing on for your audience: a token with an actual, stated claim on real trading fee revenue is a fundamentally different asset class than a memecoin whose entire value proposition is attention and momentum. It doesn't make LIQD a safe or guaranteed investment — the token is down roughly 96% from its all-time high, which tells you plenty about how much speculative premium was priced in early on — but the mechanism itself is structurally different from what you saw in Modules 3 and 5.</p>
+
+    <div class="card warn">
+      <span class="label">One thing to flag on camera</span>
+      At the time of this recording, the dedicated Arc launch page at launch.liqd.ag was still showing a "fair launchpad — coming soon" state for Arc specifically, even though the broader LiquidLaunch platform is live on HyperEVM and Robinhood Chain. Tell your audience to double-check the live status before promising them it's fully live on Arc by the time they watch this — platform rollouts across new chains often happen in stages, and a homepage can lag behind (or ahead of) what's actually deployed.
+    </div>
+  `
+},
+{
+  id:"framework",
+  tag:"Module 7",
+  title:"Putting it together — how to actually think about this",
+  html:`
+    <p>You've now covered six very different things sitting on the same chain. This module is the synthesis — the framework to leave your audience with, so they walk away with a way of thinking about Arc rather than just a list of six names.</p>
+
+    <h3>Two layers, one chain</h3>
+    <table>
+      <tr><th>Institutional layer</th><th>Speculative layer</th></tr>
+      <tr><td>Arc Network itself (BlackRock, Visa, Mastercard as validators)</td><td>Argus and its 6,000+ memecoins</td></tr>
+      <tr><td>Aave V4 (audited, backed by Gauntlet/Galaxy/Steakhouse)</td><td>$PI / PionArc (lore-driven meme)</td></tr>
+      <tr><td>Synthra's infrastructure (no live token yet)</td><td>Individual tokens launched via LiquidLaunch</td></tr>
+    </table>
+    <p>The same sub-second finality and cheap USDC gas that makes Arc attractive to BlackRock is exactly what makes it attractive to memecoin traders wanting fast, cheap trades. That tension isn't a flaw in the story — it's the actual story. Every technical decision Circle made to court institutions — cheap, predictable fees; sub-second finality; permissionless application deployment — is the exact same set of properties that make a chain a great venue for high-frequency memecoin speculation. Circle didn't build two different chains for two different audiences. They built one chain, and both audiences showed up. Whether that combination holds together once real trading volume starts flowing — whether institutional capital is comfortable sharing infrastructure with a live memecoin casino — is the open question the whole ecosystem is testing right now, in real time, starting this week.</p>
+
+    <h3>A simple DYOR checklist to teach your audience</h3>
+    <p>Walk through each of these on camera, tying each one back to the module where your audience already saw a live example:</p>
+    <ul>
+      <li><strong>Is there a live, confirmed token?</strong> — Synthra shows why this matters: no live token means nothing to actually buy yet, no matter how good the product looks. Anyone claiming to sell you "the Synthra token" right now is selling you something unofficial.</li>
+      <li><strong>Who backs it?</strong> — Aave V4 has Gauntlet, Galaxy, Steakhouse Financial — named, accountable, professional risk managers. A brand-new Argus token has an anonymous wallet address and nothing else. That's the entire spectrum of "who's behind this" in one course.</li>
+      <li><strong>Does the project's own site tell you what it is?</strong> — PionArc says outright it's a community memecoin, not affiliated with Circle. Take projects at their own word when they're honest about what they are — the danger isn't projects that are upfront about being speculative, it's ones that pretend to be something more.</li>
+      <li><strong>Is there real revenue or just speculation?</strong> — LIQD's staking revenue share is a real mechanic, tied to actual trading fees flowing through actual products. Most memecoin tickers have no underlying cash flow at all — price is 100% driven by attention and momentum, and momentum can reverse in minutes.</li>
+      <li><strong>How old is the deployment?</strong> — a protocol with a testnet track record (Synthra's $1.6M TVL testnet, LiquidLaunch's multichain history) is a different risk profile than a token that launched three hours ago on Argus with zero history to evaluate.</li>
+    </ul>
+    <p>Encourage your audience to actually run through this checklist themselves the next time they see something trending on Arc — treat it as a five-question filter they can apply to literally anything in this space, not just the six projects in this course.</p>
+
+    <div class="card legit">
+      <span class="label">Closing point for the tutorial</span>
+      Arc is a genuine experiment in whether institutional-grade financial infrastructure and open, permissionless speculation can coexist on the same rails. Aave V4 answers "can real DeFi work here?" Argus, PionArc, and LiquidLaunch answer "will retail speculation show up here too?" Both answers, so far, are yes — and your audience needs to be able to tell the two apart before they touch either one. That's the entire point of this course: not to tell anyone what to buy, but to make sure they know exactly what they're looking at before they decide anything for themselves.
+    </div>
+  `
+}
+];
+
+/* ============ QUIZ DATA ============ */
+const quiz = [
+  {q:"Who built Arc, and what stablecoin does it use for gas fees?", opts:["Coinbase; USDC","Circle; USDC","Tether; USDT","Ripple; RLUSD"], correct:1, exp:"Arc was built by Circle, the issuer of USDC, and every transaction fee on Arc is paid in USDC rather than a separate volatile gas token."},
+  {q:"Which of these is part of Arc's founding validator cohort?", opts:["Coinbase and Kraken","BlackRock and Visa","Binance and OKX","Uniswap Labs"], correct:1, exp:"Circle's founding validator cohort includes institutions like BlackRock, Visa, Mastercard, DTCC, and Goldman Sachs — a fixed, known, vetted set of about 20 SOC 2-certified operators."},
+  {q:"What replaces Aave V3's rebasing aTokens in V4?", opts:["Wrapped stablecoins","ERC-4626 vaults","NFT receipts","Nothing, V4 keeps rebasing"], correct:1, exp:"Aave V4 adopts the ERC-4626 vault standard, eliminating the rebasing behavior of the old aTokens and simplifying accounting for integrators and auditors."},
+  {q:"What is Aave V4's new liquidity architecture called?", opts:["Pool-and-Bridge","Hub-and-Spoke","Vault-and-Chain","Layer-and-Loop"], correct:1, exp:"V4 introduces a Hub-and-Spoke model: a central Liquidity Hub on each chain feeds customizable Spoke markets with their own risk parameters."},
+  {q:"On Argus, what happens when a token hits its milestone threshold?", opts:["It's automatically deleted","It \"graduates\" into deeper liquidity","The creator gets banned","Trading fees drop to zero"], correct:1, exp:"Tokens climb toward a graduation milestone — a market-cap threshold at which the token moves into deeper, more permanent liquidity."},
+  {q:"What is the current status of Synthra's SYN token?", opts:["Trading on five major exchanges","Not yet live — listed as \"upcoming,\" price unavailable","Already at a $500M market cap","Merged into the AAVE token"], correct:1, exp:"SYN is listed on CoinGecko as an upcoming cryptocurrency with price data currently unavailable — there is nothing live to buy yet."},
+  {q:"According to PionArc's own site, what is $PI?", opts:["An official Circle product","A community memecoin, not affiliated with Circle or Arc","A stablecoin pegged to π","Aave's governance token"], correct:1, exp:"PionArc states directly: \"$PI is a community memecoin on Arc. Not affiliated with Circle or Arc. Not financial advice.\""},
+  {q:"What chains does LiquidLaunch (launch.liqd.ag) support?", opts:["Only Arc","Only Ethereum mainnet","HyperEVM, Robinhood Chain, and Arc","Only Solana"], correct:2, exp:"LiquidLaunch is a fair-launch platform originally built for Hyperliquid's HyperEVM, now expanded to support Robinhood Chain and Arc as well."},
+  {q:"What does the LIQD token's staking mechanic actually do?", opts:["Nothing, it's purely speculative","100% of LiquidLaunch and LiquidSwap revenue goes back to stakers","It gives voting rights only on HyperEVM","It burns 1% of supply monthly"], correct:1, exp:"The Liquid Labs team states that 100% of the revenue generated on LiquidLaunch and LiquidSwap goes back to LIQD token stakers — a real revenue-share mechanic."},
+  {q:"What's the biggest practical difference between the Aave V4 deployment and the Argus token ecosystem?", opts:["Aave uses a different blockchain entirely","Aave is an audited protocol with institutional backers; most Argus tokens are unaudited and brand-new","Argus tokens are illegal, Aave isn't","There is no meaningful difference"], correct:1, exp:"Aave V4 is a battle-tested, audited protocol backed by risk managers like Gauntlet and Galaxy. Argus tokens are typically brand-new, unaudited, anonymous launches — the opposite end of the risk spectrum."},
+  {q:"What consensus model does Arc run on?", opts:["Open proof-of-stake, anyone can validate","Proof-of-authority with a fixed, known validator set","Proof-of-work mining","No consensus mechanism — centralized server"], correct:1, exp:"Arc runs on proof-of-authority: developers can deploy freely, but a fixed group of known, vetted institutions produces and validates blocks — roughly 20 SOC 2-certified operators."},
+  {q:"What throughput and finality does Arc target?", opts:["10 TPS, 10-minute finality","3,000+ TPS, sub-second finality","100 TPS, 1-hour finality","Unlimited TPS, no finality"], correct:1, exp:"Arc targets throughput above 3,000 transactions per second with deterministic sub-second finality."},
+  {q:"When did Arc's public mainnet go live?", opts:["January 1, 2026","September 16, 2026","December 25, 2025","June 9, 2026"], correct:1, exp:"Arc's public mainnet launched on September 16, 2026."},
+  {q:"Did Circle commit to a public ARC investment token at mainnet launch?", opts:["Yes, ARC immediately listed on major exchanges","No — Circle minted 10B ARC tokens as a technical milestone but did not commit to a public launch","Yes, ARC replaced USDC as gas","No token was ever minted"], correct:1, exp:"Circle minted 10 billion ARC tokens in the US as a technical milestone, explicitly without committing to a public token launch. Anything trading as \"ARC\" right now is not Circle's own asset."},
+  {q:"Which of these is NOT one of Arc's stated core use cases?", opts:["Cross-border payments and payouts","Onchain FX between stablecoins","Bitcoin mining rewards","Treasury management for businesses"], correct:2, exp:"Arc is built for tokenization, onchain FX, cross-border payments, treasury management, capital markets settlement, and agentic economic activity — not mining, which doesn't apply to a proof-of-authority chain."},
+  {q:"How much did Aave Labs commit to the Aave DAO as part of the Arc deployment proposal?", opts:["$500,000 one-time","A minimum of $2M/year over 5 years ($10M total)","$100M upfront","Nothing — it was a free deployment"], correct:1, exp:"The proposal committed a minimum of $2 million per year over five years, totaling $10 million, to the Aave DAO."},
+  {q:"When did Aave Labs first publish its \"Temp Check\" proposal to deploy V4 on Arc?", opts:["May 29, 2026","January 2025","The day mainnet launched","It was never a formal proposal"], correct:0, exp:"Aave Labs published the Temp Check governance proposal on May 29, 2026, well ahead of the September mainnet launch."},
+  {q:"Which of these firms is supporting Aave's Arc market through risk oversight or vault strategies?", opts:["Coinbase and Kraken","Gauntlet and Steakhouse Financial","Robinhood and Charles Schwab","None — Aave operates it alone"], correct:1, exp:"Bitwise, Cumberland, Dialectic, Galaxy, Gauntlet, Keyrock, and Steakhouse Financial all support the Arc market through curated vault strategies, risk oversight, and stablecoin liquidity."},
+  {q:"On Argus, what determines a token's tax split?", opts:["It's negotiated privately with each buyer","Parameters are fixed at launch and split to creator, buyback, liquidity, and holders","There is no tax on Argus","Taxes are set by Circle"], correct:1, exp:"Argus tokens have tax splits to the creator, buyback, liquidity, and holders from the first trade — and every parameter is fixed at launch, so it can't be changed later."},
+  {q:"Roughly how many individual tokens were listed on Argus at the time of this course's research?", opts:["About 50","Around 6,400+","Exactly 100","Over 1 million"], correct:1, exp:"Argus had more than 6,400 tokens listed, most with tiny market caps and extreme daily volatility."},
+  {q:"What genesis-block detail does PionArc's lore center on?", opts:["A hidden Bitcoin address","The digits of π allegedly encoded in Arc's coinbase address at block 0","A secret message from Jeremy Allaire","An Ethereum smart contract bug"], correct:1, exp:"PionArc's story is that Circle hid the digits of π inside the coinbase address of Arc's mainnet genesis block, at block 0 — the basis for the $PI memecoin."},
+  {q:"What anti-bot feature does LiquidLaunch's bonding curve include?", opts:["A 24-hour trading delay for everyone","An anti-sniper window that lets the creator buy first before anyone else","Mandatory KYC before every trade","A minimum $10,000 buy-in"], correct:1, exp:"Any funds a creator sends with the token-creation transaction automatically buy tokens for them first, preventing bots from front-running the launch."},
+  {q:"Roughly what is LIQD's max/circulating token supply?", opts:["21 million","1.2 billion","1 trillion","Unlimited, inflationary"], correct:1, exp:"LIQD has a max and circulating supply of roughly 1.2 billion tokens."},
+  {q:"What's the core tension the course identifies running through the entire Arc ecosystem?", opts:["Arc is too slow to matter","The same speed and cheap USDC gas that attracts BlackRock also attracts memecoin traders","Arc has no real projects at all","Aave refuses to support Arc"], correct:1, exp:"The same sub-second finality and cheap USDC gas that makes Arc attractive to institutions like BlackRock is exactly what makes it attractive to memecoin traders — that tension is the actual story of the ecosystem."}
+];
+
+/* ============ RENDER ============ */
+const navScroll = document.getElementById('navScroll');
+const mainEl = document.getElementById('main');
+let current = 0;
+const total = modules.length + 1; // +1 for quiz
+
+modules.forEach((m,i)=>{
+  const pill = document.createElement('button');
+  pill.className='pill';
+  pill.textContent = m.title.split(' — ')[0];
+  pill.onclick = ()=>render(i);
+  navScroll.appendChild(pill);
+});
+const quizPill = document.createElement('button');
+quizPill.className='pill';
+quizPill.textContent = 'Final Quiz';
+quizPill.onclick = ()=>render(modules.length);
+navScroll.appendChild(quizPill);
+
+function render(i){
+  current = i;
+  document.querySelectorAll('.pill').forEach((p,idx)=>p.classList.toggle('active', idx===i));
+  document.getElementById('progressBar').style.width = ((i+1)/total*100)+'%';
+  document.getElementById('midLabel').textContent = i < modules.length ? `Module ${i+1} of ${modules.length}` : 'Final Quiz';
+  document.getElementById('prevBtn').disabled = i===0;
+  document.getElementById('nextBtn').textContent = '';
+  const nb = document.getElementById('nextBtn');
+  nb.innerHTML = i===total-1 ? '<span class="txt">Done</span> ✓' : '<span class="txt">Next</span> →';
+  nb.disabled = i===total-1;
+
+  mainEl.innerHTML='';
+  if(i < modules.length){
+    const m = modules[i];
+    const div = document.createElement('div');
+    div.className='module active';
+    div.innerHTML = `<span class="module-tag">${m.tag}</span><h2>${m.title}</h2>${m.html}`;
+    mainEl.appendChild(div);
+  } else {
+    renderQuiz();
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function renderQuiz(){
+  const div = document.createElement('div');
+  div.className='module active';
+  let html = `<span class="module-tag">Final Assessment</span><h2>Arc Uncovered — Knowledge Check</h2>
+  <p>${quiz.length} questions covering everything from this course. Viewers who finish the tutorial can take this to confirm what stuck.</p>
+  <div id="scoreBox"><div class="big" id="scoreNum">0/${quiz.length}</div><div>Quiz complete</div></div>
+  <div id="quizList"></div>`;
+  div.innerHTML = html;
+  mainEl.appendChild(div);
+
+  const list = document.getElementById('quizList');
+  quiz.forEach((q,qi)=>{
+    const card = document.createElement('div');
+    card.className='qcard';
+    card.innerHTML = `<span class="qnum">Question ${qi+1} of ${quiz.length}</span><h4>${q.q}</h4>`;
+    q.opts.forEach((opt,oi)=>{
+      const b = document.createElement('button');
+      b.className='opt';
+      b.textContent = opt;
+      b.onclick = ()=>answer(qi,oi,card);
+      card.appendChild(b);
+    });
+    const ex = document.createElement('div');
+    ex.className='explain';
+    ex.id = `exp-${qi}`;
+    ex.textContent = q.exp;
+    card.appendChild(ex);
+    list.appendChild(card);
+  });
+}
+
+let scores = {};
+function answer(qi,oi,card){
+  if(scores[qi] !== undefined) return;
+  const correctIdx = quiz[qi].correct;
+  const opts = card.querySelectorAll('.opt');
+  opts.forEach((o,idx)=>{
+    o.disabled = true;
+    if(idx===correctIdx) o.classList.add('correct');
+    else if(idx===oi) o.classList.add('incorrect');
+  });
+  document.getElementById(`exp-${qi}`).classList.add('show');
+  scores[qi] = (oi===correctIdx);
+  if(Object.keys(scores).length === quiz.length){
+    const right = Object.values(scores).filter(Boolean).length;
+    document.getElementById('scoreBox').style.display='block';
+    document.getElementById('scoreNum').textContent = `${right}/${quiz.length}`;
+    document.getElementById('scoreBox').scrollIntoView({behavior:'smooth', block:'center'});
+  }
+}
+
+function go(dir){
+  const next = current + dir;
+  if(next>=0 && next<total) render(next);
+}
+
+render(0);
+</script>
+</body>
+</html>
